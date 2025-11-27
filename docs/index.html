@@ -1,1 +1,364 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Merry English – Christmas Edition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #ffecd2 0%, #fcb69f 40%, #b02b4a 100%);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* Leichte "Schnee"-Animation */
+    .snow {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(2px 2px at 20px 20px, rgba(255,255,255,0.9) 50%, transparent 50%),
+        radial-gradient(2px 2px at 80px 40px, rgba(255,255,255,0.8) 50%, transparent 50%),
+        radial-gradient(3px 3px at 50px 90px, rgba(255,255,255,0.7) 50%, transparent 50%);
+      background-size: 120px 120px;
+      animation: snow 10s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes snow {
+      from { transform: translateY(-50px); }
+      to   { transform: translateY(50px); }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      max-width: 900px;
+      width: 95%;
+      box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .header-main {
+      flex: 2;
+      min-width: 260px;
+    }
+
+    .title {
+      font-size: clamp(2.3rem, 4vw, 3rem);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .title span.emoji {
+      font-size: 2.4rem;
+      filter: drop-shadow(0 0 6px rgba(0,0,0,0.35));
+    }
+
+    .subtitle {
+      margin-top: 0.5rem;
+      font-size: 0.98rem;
+      opacity: 0.9;
+    }
+
+    .subtitle strong {
+      font-weight: 700;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.6rem;
+    }
+
+    .header-side {
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .bauble {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #fff 0%, #ffe08a 25%, #f57c7c 60%, #962d5a 100%);
+      position: relative;
+      margin: 0 auto;
+      box-shadow: 0 18px 35px rgba(0,0,0,0.45);
+    }
+
+    .bauble::before {
+      content: "";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 46px;
+      height: 22px;
+      border-radius: 12px 12px 6px 6px;
+      background: linear-gradient(135deg, #f5f5f5, #cccccc);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    .bauble::after {
+      content: "";
+      position: absolute;
+      top: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 16px;
+      background: #f5f5f5;
+      border-radius: 999px;
+    }
+
+    .bauble-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 0.5rem;
+    }
+
+    .bauble-text strong {
+      font-size: 1.1rem;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.3rem;
+      margin-top: 1.5rem;
+    }
+
+    .game-card {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 18px;
+      padding: 1.2rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .game-card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .difficulty {
+      font-size: 0.68rem;
+      padding: 0.18rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.6);
+      opacity: 0.9;
+    }
+
+    .game-desc {
+      font-size: 0.9rem;
+      opacity: 0.95;
+      margin-bottom: 0.8rem;
+    }
+
+    .word-example {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-bottom: 0.9rem;
+      background: rgba(0,0,0,0.35);
+      padding: 0.5rem 0.6rem;
+      border-radius: 10px;
+    }
+
+    .play-btn {
+      align-self: flex-start;
+      text-decoration: none;
+      background: linear-gradient(135deg, #19c37d, #0f9b63);
+      color: #fff;
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, translate 0.15s ease;
+    }
+
+    .play-btn span.icon {
+      font-size: 1.1rem;
+    }
+
+    .play-btn:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.4);
+    }
+
+    .play-btn:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+    }
+
+    .footer {
+      margin-top: 1.4rem;
+      font-size: 0.75rem;
+      opacity: 0.85;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .footer span {
+      white-space: nowrap;
+    }
+
+    .footer strong {
+      font-weight: 700;
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        padding: 1.6rem 1.3rem 1.4rem;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-side {
+        align-self: center;
+      }
+      .footer {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="snow"></div>
+
+  <main class="card">
+    <header class="header">
+      <div class="header-main">
+        <div class="badge">
+          <span>🎅 Christmas Special</span> · <span>Learn English</span>
+        </div>
+        <h1 class="title">
+          <span class="emoji">🎄</span>
+          <span>Merry English</span>
+        </h1>
+        <p class="subtitle">
+          Willkommen auf deiner <strong>Weihnachts-English-Seite</strong>!  
+          Wähle ein Spiel, um spielerisch <em>Christmas Vocabulary</em> und
+          <em>simple sentences</em> zu üben.
+        </p>
+      </div>
+
+      <div class="header-side">
+        <div class="bauble">
+          <div class="bauble-text">
+            <strong>Ho Ho Ho!</strong>
+            <span>Let’s learn English</span>
+            <span>with Christmas fun 🎁</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="games-grid">
+      <!-- Spiel 1 -->
+      <article class="game-card">
+        <h2>
+          ⛄ Snowman Vocabulary
+          <span class="difficulty">Level A1–A2</span>
+        </h2>
+        <p class="game-desc">
+          Übe <strong>wichtige Weihnachts-Wörter</strong> auf Englisch.  
+          Finde zu den Bildern das richtige Wort – perfekt für Anfänger.
+        </p>
+        <p class="word-example">
+          Beispiele: <strong>snowflake</strong> (Schneeflocke),
+          <strong>reindeer</strong> (Rentier), <strong>gingerbread</strong> (Lebkuchen).
+        </p>
+        <a href="snowman-vocab.html" class="play-btn">
+          <span class="icon">▶</span>
+          <span>Play Snowman Vocabulary</span>
+        </a>
+      </article>
+
+      <!-- Spiel 2 -->
+      <article class="game-card">
+        <h2>
+          🎁 Present Quiz
+          <span class="difficulty">Level A2–B1</span>
+        </h2>
+        <p class="game-desc">
+          Beantworte kleine <strong>Multiple-Choice-Fragen</strong> zu Weihnachten
+          und trainiere dabei dein Leseverständnis auf Englisch.
+        </p>
+        <p class="word-example">
+          Du lernst kurze Sätze wie  
+          <em>“I would like a book for Christmas.”</em> oder  
+          <em>“We decorate the Christmas tree together.”</em>
+        </p>
+        <a href="present-quiz.html" class="play-btn">
+          <span class="icon">▶</span>
+          <span>Play Present Quiz</span>
+        </a>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <span>✨ Tipp: Spiele zuerst <strong>Snowman Vocabulary</strong>, dann das <strong>Present Quiz</strong>.</span>
+      <span>Language focus: <strong>vocabulary</strong> &amp; <strong>simple sentences</strong></span>
+    </footer>
+  </main>
+</body>
+</html>
 
